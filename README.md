@@ -25,7 +25,7 @@ cp vibe-island/rex.json ~/.vibe-island/integrations/rex.json
 
 Herstart daarna Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
 
-Verplaats je de map, draai dan `./build.sh` opnieuw.
+`./build.sh` bouwt het appje, zet het in `~/Applications/RexJump.app` en start het. Daar vindt macOS het ook via Spotlight. Bouw je later opnieuw, dan wordt de draaiende versie eerst gestopt en vervangen.
 
 ## Gebruiken
 
