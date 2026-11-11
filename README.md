@@ -15,6 +15,15 @@ Vibe Island kent voor Rex alleen de standaardsprong: de app naar voren halen. Me
 
 Een klik duurt ongeveer 0,1 s, waarvan het zoeken zelf enkele milliseconden is.
 
+## Opbouw
+
+- `Sources/main.swift` en `AppDelegate.swift`: start van het appje en ontvangst van de URL's.
+- `JumpRequest.swift` en `ProcessLookup.swift`: pid's uit de URL, en alle processen op een tty.
+- `RexConnection.swift`: socket, WebSocket-framing en `hello`. `RexClient.swift`: de API-aanroepen. `PaneMatcher.swift`: de vergelijking van pid's met het `process`-antwoord.
+- `JumpHandler.swift`: de hele sprong, van URL tot focus. `RexApp.swift`: Rex Beta naar voren halen.
+- `SingleInstance.swift`: voorkomt dat er meerdere kopieën naast elkaar blijven draaien. Een tweede kopie handelt de URL's af die hij zelf kreeg en sluit zich daarna af.
+- `Resources/Info.plist`: bundle id en het URL-scheme `rexjump`.
+
 ## Installeren
 
 Vereist Vibe Island 1.0.22 of nieuwer (niet de Mac App Store-editie), Rex Beta en Xcode of de command line tools.
@@ -40,6 +49,6 @@ Elke sprong staat in `~/Library/Logs/rex-vibe-island-jump.log`, met `match`, `kl
 
 ## Beperkingen
 
-- De bundle id `com.superlogical.rex.server` en de Rex-app `com.superlogical.rex` staan vast in `vibe-island/rex.json` en `main.swift`.
+- De bundle id `com.superlogical.rex.server` en de Rex-app `com.superlogical.rex` staan vast in `vibe-island/rex.json` en `Sources/RexApp.swift`.
 - Het appje gaat uit van API-revisie 10 van Rex. Een veel nieuwere Rex kan aanpassing vragen; fouten staan als `mislukt: …` in het log.
 - Een native `rex://focus` in Rex zou dit overbodig maken. Zie `FEATURE-REQUEST.md`.
