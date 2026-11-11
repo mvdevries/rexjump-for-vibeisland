@@ -19,13 +19,12 @@ Zonder dit haalt Vibe Island Rex alleen naar voren. Met Rex Jump kom je op de ju
 Je hebt Vibe Island 1.0.22 of nieuwer nodig (niet de Mac App Store-editie), Rex Beta en Xcode of de command line tools.
 
 ```
-./build.sh
-cp vibe-island/rex.json ~/.vibe-island/integrations/rex.json
+./install.sh
 ```
 
-Herstart daarna Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
+Dat bouwt het appje als dat nog niet bestaat, zet het in `~/Applications/RexJump.app`, plaatst de jump rule in `~/.vibe-island/integrations/rex.json` en start het appje. Is de rule veranderd, herstart dan Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
 
-`./build.sh` bouwt het appje, zet het in `~/Applications/RexJump.app` en start het. Daar vindt macOS het ook via Spotlight. Bouw je later opnieuw, dan wordt de draaiende versie eerst gestopt en vervangen.
+Staat het appje in `~/Applications`, dan vindt macOS het ook via Spotlight. Na een wijziging in de code draai je `./build.sh` en daarna `./install.sh`: de draaiende versie wordt gestopt en vervangen.
 
 ## Gebruiken
 

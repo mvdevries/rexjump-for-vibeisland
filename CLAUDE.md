@@ -20,7 +20,8 @@ Swift-appje `RexJump.app` dat een klik in Vibe Island laat springen naar de juis
 │   └── Log.swift, Failure.swift
 ├── Resources/               Info.plist (bundle id nl.martyn.rexjump, URL-scheme rexjump) en RexJump.icns
 ├── vibe-island/rex.json     de jump rule voor ~/.vibe-island/integrations/
-├── build.sh                 bouwt, ondertekent en zet RexJump.app in ~/Applications
+├── build.sh                 bouwt en ondertekent RexJump.app (genegeerd door git)
+├── install.sh               zet app in ~/Applications, rule in ~/.vibe-island en start de app
 ├── FEATURE-REQUEST.md       tekst voor het Rex-team (nog niet gepost)
 └── icon/                    icon.png (bron van het icoon) en social-preview.png (voor GitHub)
 ```
@@ -28,11 +29,11 @@ Swift-appje `RexJump.app` dat een klik in Vibe Island laat springen naar de juis
 ## Commando's
 
 ```
-./build.sh                                  bouwen, installeren in ~/Applications en starten (stopt de draaiende versie zelf)
+./build.sh                                  bouwen
+./install.sh                                app en jump rule plaatsen en starten (stopt de draaiende versie zelf)
 pkill -x RexJump                            draaiend appje stoppen
 open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"   handmatig een sprong doen
 tail -f ~/Library/Logs/rex-vibe-island-jump.log    log volgen
-cp vibe-island/rex.json ~/.vibe-island/integrations/rex.json
 osascript -e 'tell application "Vibe Island" to quit'; open -a "Vibe Island"   rule inladen
 ```
 
@@ -47,7 +48,7 @@ osascript -e 'tell application "Vibe Island" to quit'; open -a "Vibe Island"   r
 ## Afspraken
 
 - Nederlands, ook in commitberichten en logregels.
-- Geen commentaar in de Swift-code. `build.sh` heeft wel korte stapkoppen.
+- Geen commentaar in de Swift-code. `build.sh` en `install.sh` hebben wel korte stapkoppen.
 - Wijzigingen via een branch en een pull request (`gh-bot pr create`), nooit direct naar `main`. Mergen alleen als Martyn dat zegt.
 - Geen Claude-attributie in commits of PR-teksten.
 - Het icoon is samengesteld uit de iconen van Vibe Island en Claude. Houd de repo privé, of vervang het icoon als hij ooit openbaar gaat.
