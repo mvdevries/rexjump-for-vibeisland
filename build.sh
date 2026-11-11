@@ -2,18 +2,22 @@
 set -e
 cd "${0:A:h}"
 
+# Instellingen
+app_name="VibeIsland Rex Jump"
+app="$app_name.app"
+
 # Oude build opruimen en bundle-structuur aanmaken
-rm -rf VibeIslandRexJump.app
-mkdir -p VibeIslandRexJump.app/Contents/MacOS VibeIslandRexJump.app/Contents/Resources
+rm -rf "$app"
+mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 
 # Swift-code compileren
-swiftc -O -o VibeIslandRexJump.app/Contents/MacOS/VibeIslandRexJump Sources/*.swift
+swiftc -O -o "$app/Contents/MacOS/$app_name" Sources/*.swift
 
 # Info.plist en icoon toevoegen
-cp Resources/Info.plist VibeIslandRexJump.app/Contents/Info.plist
-cp Resources/VibeIslandRexJump.icns VibeIslandRexJump.app/Contents/Resources/VibeIslandRexJump.icns
+cp Resources/Info.plist "$app/Contents/Info.plist"
+cp "Resources/$app_name.icns" "$app/Contents/Resources/$app_name.icns"
 
 # Ondertekenen (ad-hoc)
-codesign --force --sign - VibeIslandRexJump.app
+codesign --force --sign - "$app"
 
-echo "Vibe Island Rex Jump is gebouwd"
+echo "$app_name is gebouwd"

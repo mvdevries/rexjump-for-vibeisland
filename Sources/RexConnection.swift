@@ -91,7 +91,7 @@ final class RexConnection {
     }
 
     private func hello() throws {
-        try send(["type": "hello", "api_revision": 10, "client": ["kind": "other", "name": "vibe-island-rex-jump", "version": "1"]])
+        try send(["type": "hello", "api_revision": 10, "client": ["kind": "other", "name": "VibeIsland Rex Jump", "version": "1"]])
         let welcome = try receive()
         guard welcome["type"] as? String == "welcome" else { throw Failure("geen welcome van Rex") }
     }

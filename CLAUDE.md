@@ -1,6 +1,6 @@
 # rex-vibe-island-jump
 
-Swift-appje `VibeIslandRexJump.app` (Vibe Island Rex Jump) dat een klik in Vibe Island laat springen naar de juiste Rex-pane. Gebruikersdocs staan in `README.md`.
+Swift-appje `VibeIsland Rex Jump.app` dat een klik in Vibe Island laat springen naar de juiste Rex-pane. Gebruikersdocs staan in `README.md`.
 
 ## Waar staat wat
 
@@ -18,9 +18,9 @@ Swift-appje `VibeIslandRexJump.app` (Vibe Island Rex Jump) dat een klik in Vibe 
 │   ├── RexApp.swift         haalt Rex Beta naar voren (bundle id staat hier)
 │   ├── SingleInstance.swift voorkomt meerdere kopieën
 │   └── Log.swift, Failure.swift
-├── Resources/               Info.plist (bundle id nl.martyn.vibeislandrexjump, URL-scheme rexjump) en VibeIslandRexJump.icns
+├── Resources/               Info.plist (bundle id nl.martyn.vibeislandrexjump, URL-scheme rexjump) en "VibeIsland Rex Jump.icns"
 ├── vibe-island/rex.json     de jump rule voor ~/.vibe-island/integrations/
-├── build.sh                 bouwt en ondertekent VibeIslandRexJump.app (genegeerd door git)
+├── build.sh                 bouwt en ondertekent VibeIsland Rex Jump.app (genegeerd door git)
 ├── install.sh               zet app in ~/Applications, rule in ~/.vibe-island en start de app
 ├── FEATURE-REQUEST.md       tekst voor het Rex-team (nog niet gepost)
 └── icon/                    icon.png (bron van het icoon) en social-preview.png (voor GitHub)
@@ -31,7 +31,7 @@ Swift-appje `VibeIslandRexJump.app` (Vibe Island Rex Jump) dat een klik in Vibe 
 ```
 ./build.sh                                  bouwen
 ./install.sh                                app en jump rule plaatsen en starten (stopt de draaiende versie zelf)
-pkill -f VibeIslandRexJump.app                           draaiend appje stoppen
+pkill -f "VibeIsland Rex Jump.app"                           draaiend appje stoppen
 open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"   handmatig een sprong doen
 tail -f ~/Library/Logs/rex-vibe-island-jump.log    log volgen
 osascript -e 'tell application "Vibe Island" to quit'; open -a "Vibe Island"   rule inladen
