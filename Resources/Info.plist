@@ -3,6 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key><string>nl.martyn.rexjump</string>
+	<key>CFBundleIconFile</key><string>RexJump</string>
 	<key>CFBundleName</key><string>RexJump</string>
 	<key>CFBundleExecutable</key><string>RexJump</string>
 	<key>CFBundlePackageType</key><string>APPL</string>

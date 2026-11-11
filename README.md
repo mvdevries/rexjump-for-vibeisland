@@ -1,54 +1,70 @@
-# rex-vibe-island-jump
+<p align="center"><img src="icon/icon.png" width="160" alt="Rex Jump"></p>
 
-Laat een klik op een sessie in [Vibe Island](https://vibeisland.app) springen naar de juiste pane in [Rex](https://www.superlogical.com/rex).
+# Rex Jump
 
-Vibe Island kent voor Rex alleen de standaardsprong: de app naar voren halen. Met een [custom jump rule](https://vibeisland.app/docs/custom-jump-rules/) opent Vibe Island bij een klik een URL met de sessiegegevens. `RexJump.app` ontvangt die URL, zoekt de bijbehorende Rex-pane en focust die.
+Klik in [Vibe Island](https://vibeisland.app) op een sessie en [Rex](https://www.superlogical.com/rex) springt naar de pane waar die sessie draait.
 
-## Hoe het werkt
+Zonder dit haalt Vibe Island Rex alleen naar voren. Met Rex Jump kom je op de juiste sessie, het juiste tabblad en de juiste pane terecht, ook als je er tientallen open hebt.
 
-1. Vibe Island ziet Rex-sessies onder de bundle id `com.superlogical.rex.server` en opent bij een klik de URL uit `vibe-island/rex.json`: `rexjump://focus?session=…&tty=…&pid=…&cwd=…&bundle=…`.
-2. `RexJump.app` is een klein achtergrondappje dat het scheme `rexjump://` afhandelt. Het heeft geen venster of dockicoon.
-3. Het appje verzamelt de pid's uit de URL, en bij een `tty` ook alle processen op die tty (via libproc).
-4. Het verbindt met de unix-socket van de Rex-server (`~/Library/Application Support/rex/server.sock`) en praat het besturingsprotocol `rex.control.v1` (WebSocket op `/api/control`): `hello`, `session.attach_all`, daarna alle sessies en panes langs met `session.list`, `session.list_blocks` en `block.method process`.
-5. Is er een pane waarvan de `foreground`-, `child`- of `ancestors`-pid overeenkomt, dan volgen `session.focus_block` en `client.perform` met `session.select`. Daarna haalt het appje Rex Beta naar voren.
-6. Zonder match gebeurt er niets: er wordt nooit een nieuwe of andere pane geopend.
+## Wat het kan
 
-Een klik duurt ongeveer 0,1 s, waarvan het zoeken zelf enkele milliseconden is.
-
-## Opbouw
-
-- `Sources/main.swift` en `AppDelegate.swift`: start van het appje en ontvangst van de URL's.
-- `JumpRequest.swift` en `ProcessLookup.swift`: pid's uit de URL, en alle processen op een tty.
-- `RexConnection.swift`: socket, WebSocket-framing en `hello`. `RexClient.swift`: de API-aanroepen. `PaneMatcher.swift`: de vergelijking van pid's met het `process`-antwoord.
-- `JumpHandler.swift`: de hele sprong, van URL tot focus. `RexApp.swift`: Rex Beta naar voren halen.
-- `SingleInstance.swift`: voorkomt dat er meerdere kopieën naast elkaar blijven draaien. Een tweede kopie handelt de URL's af die hij zelf kreeg en sluit zich daarna af.
-- `Resources/Info.plist`: bundle id en het URL-scheme `rexjump`.
+- Springt bij een klik naar de exacte pane in Rex waar de agent draait en haalt Rex Beta naar voren.
+- Werkt voor elke sessie die Vibe Island toont, zolang die in Rex draait.
+- Is snel: een sprong duurt ongeveer 0,1 seconde.
+- Doet niets als er geen pane bij de sessie hoort. Er wordt nooit een nieuwe of verkeerde pane geopend.
+- Draait onzichtbaar op de achtergrond, zonder dockicoon, en nooit dubbel.
 
 ## Installeren
 
-Vereist Vibe Island 1.0.22 of nieuwer (niet de Mac App Store-editie), Rex Beta en Xcode of de command line tools.
+Je hebt Vibe Island 1.0.22 of nieuwer nodig (niet de Mac App Store-editie), Rex Beta en Xcode of de command line tools.
 
 ```
 ./build.sh
 cp vibe-island/rex.json ~/.vibe-island/integrations/rex.json
 ```
 
-Herstart daarna Vibe Island, want die leest de integraties alleen bij het opstarten. `build.sh` compileert het appje, ondertekent het ad hoc en meldt het aan bij macOS. Het appje wordt bij de eerste klik vanzelf gestart en blijft daarna actief.
+Herstart daarna Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
 
-Het appje staat op de plek waar je het bouwt. Verplaats je de map, draai dan `./build.sh` opnieuw.
+Verplaats je de map, draai dan `./build.sh` opnieuw.
 
-## Controleren
+## Gebruiken
 
-Een sprong handmatig proberen, met de tty van een Claude-sessie in Rex:
+Niets: klik in Vibe Island op een sessie die in Rex draait.
+
+Handmatig proberen kan met de tty van een sessie:
 
 ```
 open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"
 ```
 
-Elke sprong staat in `~/Library/Logs/rex-vibe-island-jump.log`, met `match`, `klaar` of de reden dat er niets gebeurde.
+## Als het niet werkt
+
+Elke sprong staat in `~/Library/Logs/rex-vibe-island-jump.log`:
+
+| In het log | Betekenis |
+|---|---|
+| geen `url`-regel na een klik | Vibe Island gebruikt de rule niet. Controleer of `rex.json` op zijn plek staat en herstart Vibe Island. |
+| `klaar` | De sprong is gelukt. |
+| `niet gevonden in Rex` | Die sessie draait niet in een Rex-pane. Er is niets gedaan. |
+| `geen pid of tty` | Vibe Island gaf geen gegevens mee. Er is niets gedaan. |
+| `mislukt: …` | Er ging iets mis met Rex, bijvoorbeeld een server die niet draait. De melding staat erbij. |
+
+## Verwijderen
+
+```
+pkill -x RexJump
+rm ~/.vibe-island/integrations/rex.json
+```
+
+Herstart daarna Vibe Island.
+
+## Het icoon
+
+Het icoon combineert dat van Vibe Island (de notch) met dat van Claude (de oranje badge). Het is samengesteld uit de iconen van de apps op deze Mac en zit als `icon/icon.png` in de repo. `Resources/RexJump.icns` is daar de appversie van, en `icon/social-preview.png` is het plaatje voor de repo op GitHub.
 
 ## Beperkingen
 
-- De bundle id `com.superlogical.rex.server` en de Rex-app `com.superlogical.rex` staan vast in `vibe-island/rex.json` en `Sources/RexApp.swift`.
-- Het appje gaat uit van API-revisie 10 van Rex. Een veel nieuwere Rex kan aanpassing vragen; fouten staan als `mislukt: …` in het log.
-- Een native `rex://focus` in Rex zou dit overbodig maken. Zie `FEATURE-REQUEST.md`.
+- Alleen Rex Beta op macOS, met Vibe Island op dezelfde Mac.
+- Rex Beta draait onder de bundle id `com.superlogical.rex`. Staat er ooit een andere build, dan moet dat in `Sources/RexApp.swift` aangepast worden.
+- Het appje gaat uit van versie 10 van de Rex-API. Een veel nieuwere Rex kan aanpassing vragen.
+- Een ingebouwde `rex://focus` in Rex zou dit overbodig maken. Zie `FEATURE-REQUEST.md`.
