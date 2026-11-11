@@ -1,0 +1,8 @@
+{
+  "displayName": "Rex",
+  "bundleIdentifier": "com.superlogical.rex.server",
+  "jumpRule": {
+    "method": "urlScheme",
+    "template": "rexjump://focus?session={session_id}&tty={tty}&pid={pid}&cwd={cwd}&bundle={bundle_id}"
+  }
+}
