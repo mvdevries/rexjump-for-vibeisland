@@ -2,17 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleIdentifier</key><string>nl.martyn.rexjump</string>
-	<key>CFBundleIconFile</key><string>RexJump</string>
-	<key>CFBundleName</key><string>RexJump</string>
-	<key>CFBundleExecutable</key><string>RexJump</string>
+	<key>CFBundleIdentifier</key><string>nl.martyn.vibeislandrexjump</string>
+	<key>CFBundleIconFile</key><string>VibeIslandRexJump</string>
+	<key>CFBundleName</key><string>Vibe Island Rex Jump</string>
+	<key>CFBundleDisplayName</key><string>Vibe Island Rex Jump</string>
+	<key>CFBundleExecutable</key><string>VibeIslandRexJump</string>
 	<key>CFBundlePackageType</key><string>APPL</string>
 	<key>CFBundleVersion</key><string>1</string>
 	<key>LSUIElement</key><true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleURLName</key><string>nl.martyn.rexjump</string>
+			<key>CFBundleURLName</key><string>nl.martyn.vibeislandrexjump</string>
 			<key>CFBundleURLSchemes</key><array><string>rexjump</string></array>
 		</dict>
 	</array>

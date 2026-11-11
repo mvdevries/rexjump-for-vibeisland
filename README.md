@@ -1,10 +1,10 @@
-<p align="center"><img src="icon/icon.png" width="160" alt="Rex Jump"></p>
+<p align="center"><img src="icon/icon.png" width="160" alt="Vibe Island Rex Jump"></p>
 
-# Rex Jump
+# Vibe Island Rex Jump
 
 Klik in [Vibe Island](https://vibeisland.app) op een sessie en [Rex](https://www.superlogical.com/rex) springt naar de pane waar die sessie draait.
 
-Zonder dit haalt Vibe Island Rex alleen naar voren. Met Rex Jump kom je op de juiste sessie, het juiste tabblad en de juiste pane terecht, ook als je er tientallen open hebt.
+Zonder dit haalt Vibe Island Rex alleen naar voren. Met Vibe Island Rex Jump kom je op de juiste sessie, het juiste tabblad en de juiste pane terecht, ook als je er tientallen open hebt.
 
 ## Wat het kan
 
@@ -22,7 +22,7 @@ Je hebt Vibe Island 1.0.22 of nieuwer nodig (niet de Mac App Store-editie), Rex 
 ./install.sh
 ```
 
-Dat bouwt het appje als dat nog niet bestaat, zet het in `~/Applications/RexJump.app`, plaatst de jump rule in `~/.vibe-island/integrations/rex.json` en start het appje. Is de rule veranderd, herstart dan Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
+Dat bouwt het appje als dat nog niet bestaat, zet het in `~/Applications/VibeIslandRexJump.app`, plaatst de jump rule in `~/.vibe-island/integrations/rex.json` en start het appje. Is de rule veranderd, herstart dan Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
 
 Staat het appje in `~/Applications`, dan vindt macOS het ook via Spotlight. Na een wijziging in de code draai je `./build.sh` en daarna `./install.sh`: de draaiende versie wordt gestopt en vervangen.
 
@@ -51,7 +51,7 @@ Elke sprong staat in `~/Library/Logs/rex-vibe-island-jump.log`:
 ## Verwijderen
 
 ```
-pkill -x RexJump
+pkill -f VibeIslandRexJump.app
 rm ~/.vibe-island/integrations/rex.json
 ```
 
@@ -59,7 +59,7 @@ Herstart daarna Vibe Island.
 
 ## Het icoon
 
-Het icoon combineert dat van Vibe Island (de notch) met dat van Claude (de oranje badge). Het is samengesteld uit de iconen van de apps op deze Mac en zit als `icon/icon.png` in de repo. `Resources/RexJump.icns` is daar de appversie van, en `icon/social-preview.png` is het plaatje voor de repo op GitHub.
+Het icoon combineert dat van Vibe Island (de notch) met dat van Claude (de oranje badge). Het is samengesteld uit de iconen van de apps op deze Mac en zit als `icon/icon.png` in de repo. `Resources/VibeIslandRexJump.icns` is daar de appversie van, en `icon/social-preview.png` is het plaatje voor de repo op GitHub.
 
 ## Beperkingen
 
