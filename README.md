@@ -60,28 +60,6 @@ rm -rf "$HOME/Applications/RexJump for VibeIsland.app"
 
 Then restart Vibe Island.
 
-## Structure
-
-```
-Sources/                All Swift code, one concern per file
-  main.swift              Starts the app
-  AppDelegate.swift       Receives the rexjump:// URLs
-  JumpHandler.swift       The whole jump, from URL to focus (start here)
-  JumpRequest.swift       The pid and tty from the URL
-  ProcessLookup.swift     All processes on a tty (libproc)
-  RexConnection.swift     Unix socket and WebSocket, protocol rex.control.v1
-  RexClient.swift         API calls: find panes, focus, session.select
-  PaneMatcher.swift       Compares pids with the process reply of a block
-  RexApp.swift            Brings Rex Beta to the front
-  SingleInstance.swift    Prevents multiple copies
-  Log.swift, Failure.swift
-Resources/              Info.plist and the app icon (.icns)
-vibe-island/            The jump rule for ~/.vibe-island/integrations/
-assets/                 icon.svg and icon-light.svg (sources), icon.png and readme-header.png
-build.sh                Builds and signs the app
-install.sh              Installs the app and the jump rule and starts the app
-```
-
 ## Development
 
 Requires macOS, Xcode or the command line tools, Vibe Island and Rex Beta. There are no dependencies.
