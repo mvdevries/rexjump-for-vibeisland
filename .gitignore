@@ -1,7 +1,12 @@
-# Build-uitvoer
+# Build output
 RexJump for VibeIsland.app/
+*.app/
 *.dSYM/
+*.zip
 .build/
+build/
+dist/
+DerivedData/
 
 # Logs
 *.log
@@ -9,7 +14,10 @@ RexJump for VibeIsland.app/
 # macOS
 .DS_Store
 
-# Editors en tools
+# Editors and tools
 .idea/
 .vscode/
+*.xcuserstate
+xcuserdata/
+.swiftpm/
 .claude/settings.local.json

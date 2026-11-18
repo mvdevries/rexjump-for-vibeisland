@@ -8,6 +8,8 @@ Click a session in [Vibe Island](https://vibeisland.app) and [Rex](https://www.s
 
 Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsland you land on the right session, the right tab and the right pane, even with dozens open.
 
+**[Download the latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest)**, or see [Installing](#installing).
+
 ## What the app does
 
 - Jumps to the exact pane in Rex where the agent runs on a click, and brings Rex Beta to the front.
@@ -17,6 +19,21 @@ Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsl
 - Runs invisibly in the background, without a Dock icon, and never twice.
 
 ## Installing
+
+### From a release
+
+Download `RexJump-for-VibeIsland-<version>.zip` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest). The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy.
+
+```
+unzip RexJump-for-VibeIsland-*.zip -d ~/Applications
+xattr -dr com.apple.quarantine "$HOME/Applications/RexJump for VibeIsland.app"
+mkdir -p ~/.vibe-island/integrations && cp rex.json ~/.vibe-island/integrations/rex.json
+open "$HOME/Applications/RexJump for VibeIsland.app"
+```
+
+Then restart Vibe Island, because it only reads its integrations at startup.
+
+### From source
 
 You need Vibe Island 1.0.22 or newer (not the Mac App Store edition), Rex Beta and Xcode or the command line tools.
 
@@ -91,6 +108,11 @@ source, `assets/icon.png` the rendered version, `assets/icon-light.svg` the ligh
 ## Disclaimer
 
 RexJump for VibeIsland is an independent project. It is not affiliated with, endorsed by or sponsored by Vibe Island or Superlogical (Rex). Vibe Island and Rex are the names of their respective owners and are used here only to say what this app works with.
+
+## Contributing
+
+Bug reports, ideas and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first. Security
+problems go through [SECURITY.md](SECURITY.md).
 
 ## License
 

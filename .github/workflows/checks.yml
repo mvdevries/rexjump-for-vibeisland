@@ -1,0 +1,31 @@
+name: Checks
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and validate
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate Info.plist
+        run: plutil -lint Resources/Info.plist
+      - name: Validate the jump rule
+        run: python3 -m json.tool vibe-island/rex.json > /dev/null
+      - name: Build the app
+        run: ./build.sh
+      - name: Verify the bundle
+        run: |
+          codesign --verify --strict "RexJump for VibeIsland.app"
+          test -x "RexJump for VibeIsland.app/Contents/MacOS/RexJump for VibeIsland"
+      - name: Zip the app
+        run: ditto -c -k --keepParent "RexJump for VibeIsland.app" RexJump-for-VibeIsland-dev.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RexJump-for-VibeIsland-dev
+          path: RexJump-for-VibeIsland-dev.zip
+          retention-days: 14
