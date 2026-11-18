@@ -2,22 +2,22 @@
 set -e
 cd "${0:A:h}"
 
-# Instellingen
-app_name="VibeIsland Rex Jump"
+# Settings
+app_name="RexJump for VibeIsland"
 app="$app_name.app"
 
-# Oude build opruimen en bundle-structuur aanmaken
+# Clean up the old build and create the bundle structure
 rm -rf "$app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 
-# Swift-code compileren
+# Compile the Swift code
 swiftc -O -o "$app/Contents/MacOS/$app_name" Sources/*.swift
 
-# Info.plist en icoon toevoegen
+# Add Info.plist and icon
 cp Resources/Info.plist "$app/Contents/Info.plist"
 cp "Resources/$app_name.icns" "$app/Contents/Resources/$app_name.icns"
 
-# Ondertekenen (ad-hoc)
+# Sign (ad hoc)
 codesign --force --sign - "$app"
 
-echo "$app_name is gebouwd"
+echo "$app_name is built"
