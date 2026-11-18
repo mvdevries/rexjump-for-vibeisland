@@ -15,6 +15,7 @@ A small macOS app in Swift that makes a click on a session in Vibe Island jump t
   says so. No `Co-Authored-By` or other Claude attribution in commits and pull requests.
 - Only install and start the app (`./install.sh`) when the maintainer asks, and restart it after every code change.
 - Nothing is published or released without an explicit request.
+- Branch names start with `breaking/`, `feature/` or `fix/`: the release pipeline derives the version from them (major, minor, patch). Merge with a merge commit, not a squash. Every merge to `main` produces a release.
 - Test a jump with `open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"` and read the log; a real click cannot be
   tested from the terminal.
 
@@ -25,7 +26,8 @@ Sources/        all Swift code, one type or concern per file (start with JumpHan
 Resources/      Info.plist and the app icon (.icns)
 vibe-island/    the jump rule for ~/.vibe-island/integrations/
 assets/         icon.svg and icon-light.svg (sources), icon.png and readme-header.png (1280x400)
-build.sh        builds and signs the app (the result is ignored by git)
+build.sh        builds and signs the app, fills in `VERSION` (the result is ignored by git)
+.github/        pull request and release pipelines, Dependabot and the pull request template
 install.sh      puts the app in ~/Applications, the rule in ~/.vibe-island and starts the app
 ```
 
