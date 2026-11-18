@@ -24,7 +24,7 @@ A small macOS app in Swift that makes a click on a session in Vibe Island jump t
 Sources/        all Swift code, one type or concern per file (start with JumpHandler.swift)
 Resources/      Info.plist and the app icon (.icns)
 vibe-island/    the jump rule for ~/.vibe-island/integrations/
-icon/           icon.svg (source), icon.png and social-preview.png
+assets/         icon.svg and icon-light.svg (sources), icon.png and readme-header.png (1280x400)
 build.sh        builds and signs the app (the result is ignored by git)
 install.sh      puts the app in ~/Applications, the rule in ~/.vibe-island and starts the app
 ```
