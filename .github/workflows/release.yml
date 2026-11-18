@@ -91,8 +91,9 @@ jobs:
           CHANGELOG: ${{ needs.version.outputs.changelog }}
           PREVIOUS_TAG: ${{ needs.version.outputs.previous }}
         run: |
-          gh release create "v$VERSION" "RexJump-for-VibeIsland-$VERSION.zip" vibe-island/rex.json \
-            --target "$GITHUB_SHA" --title "v$VERSION" \
-            --generate-notes --notes-start-tag "$PREVIOUS_TAG" \
-            --notes "$CHANGELOG"
+          options=(--target "$GITHUB_SHA" --title "v$VERSION" --notes "$CHANGELOG")
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$PREVIOUS_TAG" > /dev/null 2>&1; then
+            options+=(--generate-notes --notes-start-tag "$PREVIOUS_TAG")
+          fi
+          gh release create "v$VERSION" "RexJump-for-VibeIsland-$VERSION.zip" vibe-island/rex.json "${options[@]}"
           echo "Version $VERSION released" >> "$GITHUB_STEP_SUMMARY"

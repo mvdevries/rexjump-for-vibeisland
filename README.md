@@ -8,6 +8,8 @@ Click a session in [Vibe Island](https://vibeisland.app) and [Rex](https://www.s
 
 Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsland you land on the right session, the right tab and the right pane, even with dozens open.
 
+**[Download the latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest)**, or see [Installing](#installing).
+
 ## What the app does
 
 - Jumps to the exact pane in Rex where the agent runs on a click, and brings Rex Beta to the front.
@@ -20,7 +22,7 @@ Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsl
 
 ### From a release
 
-Download `RexJump-for-VibeIsland-<version>.zip` and `rex.json` from the [latest release](../../releases/latest). The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy.
+Download `RexJump-for-VibeIsland-<version>.zip` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest). The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy.
 
 ```
 unzip RexJump-for-VibeIsland-*.zip -d ~/Applications
