@@ -1,4 +1,6 @@
-<p align="center"><img src="icon/icon.png" width="160" alt="RexJump for VibeIsland"></p>
+<p align="center">
+  <img src="icon/social-preview.png" alt="RexJump for VibeIsland: click a session, land in the right Rex pane" width="100%">
+</p>
 
 # RexJump for VibeIsland
 
@@ -6,7 +8,7 @@ Click a session in [Vibe Island](https://vibeisland.app) and [Rex](https://www.s
 
 Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsland you land on the right session, the right tab and the right pane, even with dozens open.
 
-## What it does
+## What the app does
 
 - Jumps to the exact pane in Rex where the agent runs on a click, and brings Rex Beta to the front.
 - Works for every session Vibe Island shows, as long as it runs in Rex.
@@ -58,9 +60,48 @@ rm -rf "$HOME/Applications/RexJump for VibeIsland.app"
 
 Then restart Vibe Island.
 
-## The icon
+## Structure
 
-The icon is an original design: a grid of panes with an arrow jumping to one of them. `icon/icon.svg` is the source, `icon/icon.png` the rendered version, `Resources/RexJump for VibeIsland.icns` the app version and `icon/social-preview.png` the image for the repository on GitHub.
+```
+Sources/                All Swift code, one concern per file
+  main.swift              Starts the app
+  AppDelegate.swift       Receives the rexjump:// URLs
+  JumpHandler.swift       The whole jump, from URL to focus (start here)
+  JumpRequest.swift       The pid and tty from the URL
+  ProcessLookup.swift     All processes on a tty (libproc)
+  RexConnection.swift     Unix socket and WebSocket, protocol rex.control.v1
+  RexClient.swift         API calls: find panes, focus, session.select
+  PaneMatcher.swift       Compares pids with the process reply of a block
+  RexApp.swift            Brings Rex Beta to the front
+  SingleInstance.swift    Prevents multiple copies
+  Log.swift, Failure.swift
+Resources/              Info.plist and the app icon (.icns)
+vibe-island/            The jump rule for ~/.vibe-island/integrations/
+icon/                   icon.svg (source), icon.png and social-preview.png
+build.sh                Builds and signs the app
+install.sh              Installs the app and the jump rule and starts the app
+```
+
+## Development
+
+Requires macOS, Xcode or the command line tools, Vibe Island and Rex Beta. There are no dependencies.
+
+```
+./build.sh                                           # build the app next to the scripts
+./install.sh                                         # install, place the jump rule and start
+pkill -f "RexJump for VibeIsland.app"                # stop the running app
+tail -f ~/Library/Logs/rexjump-for-vibeisland.log    # follow the log
+osascript -e 'tell application "Vibe Island" to quit'; open -a "Vibe Island"   # load the rule
+```
+
+A real click in Vibe Island cannot be tested from the terminal. Use `open "rexjump://focus?pid=&tty=…"` with the
+tty of a session and read the log.
+
+### The icon
+
+The icon is an original design: a grid of panes with an arrow jumping to one of them. `icon/icon.svg` is the
+source, `icon/icon.png` the rendered version, `Resources/RexJump for VibeIsland.icns` the app version and
+`icon/social-preview.png` the image for the repository on GitHub.
 
 ## Limitations
 
