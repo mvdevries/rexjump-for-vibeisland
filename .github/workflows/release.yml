@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Determine the version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      changelog: ${{ steps.changelog.outputs.text }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Check that there is a base version
+        run: |
+          if ! git tag --list 'v*' | grep -q .; then
+            echo "There is no v<version> tag yet. Set the tag of the last released version once, for example: git tag v0.1.0 <commit> && git push origin v0.1.0" >&2
+            exit 1
+          fi
+      - name: Version from the branch name of the merged pull request
+        id: version
+        uses: paulhatch/semantic-version@v6.0.7
+        with:
+          tag_prefix: "v"
+          major_pattern: "/Merge pull request #\\d+ from [^/]+\\/breaking\\//"
+          minor_pattern: "/Merge pull request #\\d+ from [^/]+\\/feature\\//"
+          version_format: "${major}.${minor}.${patch}"
+          bump_each_commit: false
+      - name: Release notes from the title of the pull request
+        id: changelog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title=$(gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/pulls" --jq '.[0].title // empty')
+          if [ -z "$title" ]; then
+            title=$(git log -1 --format=%s)
+          fi
+          echo "text=$title" >> "$GITHUB_OUTPUT"
+          echo "Version ${{ steps.version.outputs.version }}: $title" >> "$GITHUB_STEP_SUMMARY"
+
+  checks:
+    name: Checks
+    uses: ./.github/workflows/checks.yml
+
+  publish:
+    name: Build and release
+    needs: [version, checks]
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app with the version
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: ./build.sh
+      - name: Zip the app
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: ditto -c -k --keepParent "RexJump for VibeIsland.app" "RexJump-for-VibeIsland-$VERSION.zip"
+      - name: Create the tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.version.outputs.version }}
+          CHANGELOG: ${{ needs.version.outputs.changelog }}
+        run: |
+          gh release create "v$VERSION" "RexJump-for-VibeIsland-$VERSION.zip" vibe-island/rex.json \
+            --target "$GITHUB_SHA" --title "v$VERSION" --notes "$CHANGELOG"
+          echo "Version $VERSION released" >> "$GITHUB_STEP_SUMMARY"

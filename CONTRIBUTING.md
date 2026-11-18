@@ -11,7 +11,7 @@ Thanks for wanting to help. This is a small project, so keep changes small too.
 
 ## Pull requests
 
-- Branch from `main` and open a pull request; the maintainer merges.
+- Branch from `main` and open a pull request; the maintainer merges. The branch name starts with `breaking/`, `feature/` or `fix/`: the release pipeline derives the version from it.
 - Describe what changed and why. Mention how you tested it, for example with `open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"` and the log.
 - Do not add names or logos of other products as artwork, and do not put personal data such as e-mail addresses in commits or files. Use your GitHub noreply address for commits.
 
