@@ -12,4 +12,4 @@ RexJump for VibeIsland.app/
 # Editors en tools
 .idea/
 .vscode/
-.claude/
+.claude/settings.local.json
