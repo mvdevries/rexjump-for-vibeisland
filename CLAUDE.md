@@ -25,6 +25,7 @@ vibe-island/     The jump rule for ~/.vibe-island/integrations/
 assets/          Icon sources and rendered icon, README header (1280x400) and social preview (1280x640)
 .github/         Workflows (pull request, release) and Dependabot
 build.sh         Builds and signs the app and fills in VERSION (the result is ignored by git)
+dmg.sh           Puts the built app in a disk image (RexJump-for-VibeIsland-<version>.dmg) with an Applications shortcut
 install.sh       Puts the app in ~/Applications, the rule in ~/.vibe-island and starts the app
 ```
 
@@ -34,6 +35,7 @@ install.sh       Puts the app in ~/Applications, the rule in ~/.vibe-island and 
 |---|---|
 | Set up | Nothing: macOS with Xcode or the command line tools is enough |
 | Build | `./build.sh` (`VERSION=1.2.3 ./build.sh` fills in a version) |
+| Disk image | `VERSION=1.2.3 ./dmg.sh` (builds the app first if needed) |
 | Install and start | `./install.sh` (stops the running version itself) |
 | Stop | `pkill -f "RexJump for VibeIsland.app"` |
 | Try a jump | `open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"` |
@@ -43,7 +45,7 @@ install.sh       Puts the app in ~/Applications, the rule in ~/.vibe-island and 
 
 Deploying: `.github/workflows/release.yml` runs on every merge to `main` that changes the app (not only docs,
 assets or workflows) and can be started by hand. It determines the version from the branch name of the merged
-pull request, runs the checks, builds the app with that version and creates a tag and GitHub release with the zip
+pull request, runs the checks, builds the app with that version, puts it in a disk image and creates a tag and GitHub release with the disk image
 and `rex.json`. The version in `Info.plist` is filled in during the build and not committed.
 
 ## Architecture

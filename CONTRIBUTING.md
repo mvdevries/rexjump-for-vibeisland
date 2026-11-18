@@ -41,8 +41,8 @@ Pull requests are squash merged, so the title of the pull request becomes the co
 - **Pull request** (`.github/workflows/pull-request.yml`): checks the branch name, builds and validates the app
   on macOS and uploads the built app as an artifact of the run.
 - **Release** (`.github/workflows/release.yml`): on every merge to `main` that changes the app (not only docs
-  or workflows) it determines the version, runs the same checks, builds the app with that version, zips it and
-  creates a tag and GitHub release with the zip and `rex.json` attached.
+  or workflows) it determines the version, runs the same checks, builds the app with that version, puts it in a
+  disk image and creates a tag and GitHub release with the disk image and `rex.json` attached.
 - **Dependabot** updates the GitHub Actions weekly. Minor and patch updates arrive in one pull request, and
   major updates in a separate one so they can be reviewed on their own.
 
@@ -62,7 +62,7 @@ To build a release by hand:
 
 ```
 VERSION=1.2.3 ./build.sh
-ditto -c -k --keepParent "RexJump for VibeIsland.app" RexJump-for-VibeIsland-1.2.3.zip
+VERSION=1.2.3 ./dmg.sh
 ```
 
 Without `VERSION` the app is built as `0.0.0-dev`.

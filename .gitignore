@@ -3,6 +3,7 @@ RexJump for VibeIsland.app/
 *.app/
 *.dSYM/
 *.zip
+*.dmg
 .build/
 build/
 dist/

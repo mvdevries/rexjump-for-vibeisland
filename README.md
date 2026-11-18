@@ -21,13 +21,12 @@ Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsl
 
 ### From a release
 
-Download `RexJump-for-VibeIsland-<version>.zip` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest). The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy.
+Download `RexJump-for-VibeIsland-<version>.dmg` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest). Open the disk image and drag **RexJump for VibeIsland** onto the **Applications** folder. The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy. Run this once in a terminal:
 
 ```
-unzip RexJump-for-VibeIsland-*.zip -d ~/Applications
-xattr -dr com.apple.quarantine "$HOME/Applications/RexJump for VibeIsland.app"
+xattr -dr com.apple.quarantine "/Applications/RexJump for VibeIsland.app"
 mkdir -p ~/.vibe-island/integrations && cp rex.json ~/.vibe-island/integrations/rex.json
-open "$HOME/Applications/RexJump for VibeIsland.app"
+open "/Applications/RexJump for VibeIsland.app"
 ```
 
 Then restart Vibe Island, because it only reads its integrations at startup.
