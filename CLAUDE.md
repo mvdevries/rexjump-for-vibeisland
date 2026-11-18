@@ -76,5 +76,5 @@ Things to know:
   app is built, signed and verified, and the built app is uploaded as an artifact.
 - Dependabot groups minor and patch updates of the GitHub Actions in one pull request and major updates in a
   separate one.
-- The app is signed ad hoc and not notarized, so a downloaded copy needs
-  `xattr -dr com.apple.quarantine` on the first start (see `README.md`).
+- The app is signed ad hoc and not notarized, so a downloaded copy has to be allowed once through **Open
+  Anyway** in System Settings → Privacy & Security (see `README.md`).

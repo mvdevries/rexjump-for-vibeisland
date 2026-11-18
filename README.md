@@ -21,15 +21,17 @@ Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsl
 
 ### From a release
 
-Download `RexJump-for-VibeIsland-<version>.dmg` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest). Open the disk image and drag **RexJump for VibeIsland** onto the **Applications** folder. The app is signed ad hoc and not notarized, so macOS blocks the first start of a downloaded copy. Run this once in a terminal:
+Download `RexJump-for-VibeIsland-<version>.dmg` and `rex.json` from the [latest release](https://github.com/mvdevries/rexjump-for-vibeisland/releases/latest).
 
-```
-xattr -dr com.apple.quarantine "/Applications/RexJump for VibeIsland.app"
-mkdir -p ~/.vibe-island/integrations && cp rex.json ~/.vibe-island/integrations/rex.json
-open "/Applications/RexJump for VibeIsland.app"
-```
+1. Open the disk image and drag **RexJump for VibeIsland** onto the **Applications** folder.
+2. Put the jump rule in place:
 
-Then restart Vibe Island, because it only reads its integrations at startup.
+   ```
+   mkdir -p ~/.vibe-island/integrations && cp rex.json ~/.vibe-island/integrations/rex.json
+   ```
+
+3. Open the app. The app is signed ad hoc and not notarized, so macOS blocks the first start. Open **System Settings** → **Privacy & Security**, scroll down to the message about **RexJump for VibeIsland**, click **Open Anyway** and confirm. You only have to do this once.
+4. Restart Vibe Island, because it only reads its integrations at startup.
 
 ### From source
 
