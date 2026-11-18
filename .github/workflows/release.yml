@@ -105,10 +105,10 @@ jobs:
         env:
           VERSION: ${{ needs.version.outputs.version }}
         run: ./build.sh
-      - name: Zip the app
+      - name: Create the disk image
         env:
           VERSION: ${{ needs.version.outputs.version }}
-        run: ditto -c -k --keepParent "RexJump for VibeIsland.app" "RexJump-for-VibeIsland-$VERSION.zip"
+        run: ./dmg.sh
       - name: Create tag and release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -120,5 +120,5 @@ jobs:
           if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$PREVIOUS_TAG" > /dev/null 2>&1; then
             options+=(--generate-notes --notes-start-tag "$PREVIOUS_TAG")
           fi
-          gh release create "v$VERSION" "RexJump-for-VibeIsland-$VERSION.zip" vibe-island/rex.json "${options[@]}"
+          gh release create "v$VERSION" "RexJump-for-VibeIsland-$VERSION.dmg" vibe-island/rex.json "${options[@]}"
           echo "Version $VERSION released" >> "$GITHUB_STEP_SUMMARY"
