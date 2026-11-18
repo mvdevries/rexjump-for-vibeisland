@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon/social-preview.png" alt="RexJump for VibeIsland: click a session, land in the right Rex pane" width="100%">
+  <img src="assets/readme-header.png" alt="RexJump for VibeIsland: jump from Vibe Island to the right Rex pane" width="100%">
 </p>
 
 # RexJump for VibeIsland
@@ -77,7 +77,7 @@ Sources/                All Swift code, one concern per file
   Log.swift, Failure.swift
 Resources/              Info.plist and the app icon (.icns)
 vibe-island/            The jump rule for ~/.vibe-island/integrations/
-icon/                   icon.svg (source), icon.png and social-preview.png
+assets/                 icon.svg and icon-light.svg (sources), icon.png and readme-header.png
 build.sh                Builds and signs the app
 install.sh              Installs the app and the jump rule and starts the app
 ```
@@ -99,9 +99,9 @@ tty of a session and read the log.
 
 ### The icon
 
-The icon is an original design: a grid of panes with an arrow jumping to one of them. `icon/icon.svg` is the
-source, `icon/icon.png` the rendered version, `Resources/RexJump for VibeIsland.icns` the app version and
-`icon/social-preview.png` the image for the repository on GitHub.
+The icon is an original design: a Vibe Island pill above a terminal prompt. `assets/icon.svg` is the
+source, `assets/icon.png` the rendered version, `assets/icon-light.svg` the light variant, `Resources/RexJump for VibeIsland.icns` the app version and
+`assets/readme-header.png` the image for the repository on GitHub.
 
 ## Limitations
 
