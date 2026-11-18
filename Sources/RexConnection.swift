@@ -8,13 +8,13 @@ final class RexConnection {
 
     init(path: String) throws {
         fd = socket(AF_UNIX, SOCK_STREAM, 0)
-        guard fd >= 0 else { throw Failure("socket aanmaken mislukt") }
+        guard fd >= 0 else { throw Failure("failed to create socket") }
         var address = sockaddr_un()
         address.sun_family = sa_family_t(AF_UNIX)
         let bytes = Array(path.utf8CString)
         guard bytes.count <= MemoryLayout.size(ofValue: address.sun_path) else {
             close(fd)
-            throw Failure("socketpad te lang")
+            throw Failure("socket path too long")
         }
         withUnsafeMutableBytes(of: &address.sun_path) { target in
             for (index, byte) in bytes.enumerated() { target[index] = UInt8(bitPattern: byte) }
@@ -26,7 +26,7 @@ final class RexConnection {
         }
         guard result == 0 else {
             close(fd)
-            throw Failure("verbinden met Rex mislukt")
+            throw Failure("failed to connect to Rex")
         }
         var timeout = timeval(tv_sec: 5, tv_usec: 0)
         setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, socklen_t(MemoryLayout<timeval>.size))
@@ -49,7 +49,7 @@ final class RexConnection {
             let message = try receive()
             guard message["type"] as? String == "response", message["id"] as? String == id else { continue }
             if let error = message["error"] as? [String: Any] {
-                throw Failure("\(method): \(error["message"] as? String ?? "onbekende fout")")
+                throw Failure("\(method): \(error["message"] as? String ?? "unknown error")")
             }
             return message["payload"] as? [String: Any] ?? [:]
         }
@@ -59,7 +59,7 @@ final class RexConnection {
         var sent = 0
         while sent < data.count {
             let count = data[sent...].withUnsafeBytes { write(fd, $0.baseAddress, $0.count) }
-            guard count > 0 else { throw Failure("schrijven naar Rex mislukt") }
+            guard count > 0 else { throw Failure("failed to write to Rex") }
             sent += count
         }
     }
@@ -68,7 +68,7 @@ final class RexConnection {
         while buffer.count < count {
             var chunk = [UInt8](repeating: 0, count: 65536)
             let received = read(fd, &chunk, chunk.count)
-            guard received > 0 else { throw Failure("verbinding met Rex gesloten") }
+            guard received > 0 else { throw Failure("connection to Rex closed") }
             buffer.append(contentsOf: chunk[0..<received])
         }
         let result = Array(buffer[0..<count])
@@ -84,16 +84,16 @@ final class RexConnection {
         let terminator: [UInt8] = [13, 10, 13, 10]
         while !head.suffix(4).elementsEqual(terminator) {
             head += try take(1)
-            guard head.count < 8192 else { throw Failure("onverwacht antwoord van Rex") }
+            guard head.count < 8192 else { throw Failure("unexpected response from Rex") }
         }
         let status = String(decoding: head, as: UTF8.self).components(separatedBy: "\r\n").first ?? ""
-        guard status.contains(" 101 ") else { throw Failure("handshake geweigerd: \(status)") }
+        guard status.contains(" 101 ") else { throw Failure("handshake refused: \(status)") }
     }
 
     private func hello() throws {
-        try send(["type": "hello", "api_revision": 10, "client": ["kind": "other", "name": "VibeIsland Rex Jump", "version": "1"]])
+        try send(["type": "hello", "api_revision": 10, "client": ["kind": "other", "name": "RexJump for VibeIsland", "version": "1"]])
         let welcome = try receive()
-        guard welcome["type"] as? String == "welcome" else { throw Failure("geen welcome van Rex") }
+        guard welcome["type"] as? String == "welcome" else { throw Failure("no welcome from Rex") }
     }
 
     private func send(_ object: [String: Any]) throws {
@@ -129,12 +129,12 @@ final class RexConnection {
                 length = try take(8).reduce(0) { $0 << 8 | Int($1) }
             }
             let payload = try take(length)
-            if opcode == 8 { throw Failure("Rex sloot de verbinding") }
+            if opcode == 8 { throw Failure("Rex closed the connection") }
             if opcode == 9 || opcode == 10 { continue }
             message += payload
             if final {
                 guard let object = try JSONSerialization.jsonObject(with: Data(message)) as? [String: Any] else {
-                    throw Failure("onleesbaar bericht van Rex")
+                    throw Failure("unreadable message from Rex")
                 }
                 return object
             }

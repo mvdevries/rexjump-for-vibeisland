@@ -1,7 +1,7 @@
 import Foundation
 
 func logLine(_ text: String) {
-    let path = NSHomeDirectory() + "/Library/Logs/rex-vibe-island-jump.log"
+    let path = NSHomeDirectory() + "/Library/Logs/rexjump-for-vibeisland.log"
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     let line = formatter.string(from: Date()) + " " + text + "\n"

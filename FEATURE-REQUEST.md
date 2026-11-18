@@ -2,7 +2,7 @@
 
 **Platform:** macOS (Rex Beta)
 
-## Wat
+## What
 A `rex://focus?pid=…&cwd=…` URL that makes Rex Beta select the session/tab/pane running that process.
 
 ## Why
