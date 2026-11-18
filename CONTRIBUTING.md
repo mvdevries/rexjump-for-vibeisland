@@ -43,6 +43,8 @@ Pull requests are squash merged, so the title of the pull request becomes the co
 - **Release** (`.github/workflows/release.yml`): on every merge to `main` that changes the app (not only docs
   or workflows) it determines the version, runs the same checks, builds the app with that version, puts it in a
   disk image and creates a tag and GitHub release with the disk image and `rex.json` attached.
+- **CodeQL** (`.github/workflows/codeql.yml`) scans the Swift code and the workflows for security problems on
+  pushes and pull requests to `main`, and every week.
 - **Dependabot** updates the GitHub Actions weekly. Minor and patch updates arrive in one pull request, and
   major updates in a separate one so they can be reviewed on their own.
 

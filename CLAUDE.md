@@ -23,7 +23,7 @@ Sources/         All Swift code, one type or concern per file (start with JumpHa
 Resources/       Info.plist and the app icon (.icns)
 vibe-island/     The jump rule for ~/.vibe-island/integrations/
 assets/          Icon sources and rendered icon, README header (1280x400) and social preview (1280x640)
-.github/         Workflows (pull request, release) and Dependabot
+.github/         Workflows (pull request, release, CodeQL) and Dependabot
 build.sh         Builds and signs the app and fills in VERSION (the result is ignored by git)
 dmg.sh           Puts the built app in a disk image (RexJump-for-VibeIsland-<version>.dmg) with an Applications shortcut
 install.sh       Puts the app in ~/Applications, the rule in ~/.vibe-island and starts the app
@@ -74,6 +74,7 @@ Things to know:
 
 - Pull requests run a branch name check and a build validation: Info.plist and the jump rule are validated, the
   app is built, signed and verified, and the built app is uploaded as an artifact.
+- CodeQL scans the Swift code and the workflows on pushes and pull requests to `main`, and every week.
 - Dependabot groups minor and patch updates of the GitHub Actions in one pull request and major updates in a
   separate one.
 - The app is signed ad hoc and not notarized, so a downloaded copy has to be allowed once through **Open
