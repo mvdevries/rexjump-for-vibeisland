@@ -6,3 +6,15 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "Actions:"
+    groups:
+      actions-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      actions-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"

@@ -11,7 +11,7 @@ jobs:
     name: Build and validate
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate Info.plist
         run: plutil -lint Resources/Info.plist
       - name: Validate the jump rule
