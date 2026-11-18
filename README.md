@@ -14,7 +14,6 @@ Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsl
 
 - Jumps to the exact pane in Rex where the agent runs on a click, and brings Rex Beta to the front.
 - Works for every session Vibe Island shows, as long as it runs in Rex.
-- Is fast: a jump takes about 0.1 seconds.
 - Does nothing when no pane belongs to the session. It never opens a new or wrong pane.
 - Runs invisibly in the background, without a Dock icon, and never twice.
 
@@ -91,12 +90,6 @@ osascript -e 'tell application "Vibe Island" to quit'; open -a "Vibe Island"   #
 
 A real click in Vibe Island cannot be tested from the terminal. Use `open "rexjump://focus?pid=&tty=…"` with the
 tty of a session and read the log.
-
-### The icon
-
-The icon is an original design: a Vibe Island pill above a terminal prompt. `assets/icon.svg` is the
-source, `assets/icon.png` the rendered version, `assets/icon-light.svg` the light variant, `Resources/RexJump for VibeIsland.icns` the app version and
-`assets/readme-header.png` the image for the repository on GitHub.
 
 ## Limitations
 
