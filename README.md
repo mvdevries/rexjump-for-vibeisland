@@ -1,69 +1,78 @@
-<p align="center"><img src="icon/icon.png" width="160" alt="VibeIsland Rex Jump"></p>
+<p align="center"><img src="icon/icon.png" width="160" alt="RexJump for VibeIsland"></p>
 
-# VibeIsland Rex Jump
+# RexJump for VibeIsland
 
-Klik in [Vibe Island](https://vibeisland.app) op een sessie en [Rex](https://www.superlogical.com/rex) springt naar de pane waar die sessie draait.
+Click a session in [Vibe Island](https://vibeisland.app) and [Rex](https://www.superlogical.com/rex) jumps to the pane where that session runs.
 
-Zonder dit haalt Vibe Island Rex alleen naar voren. Met VibeIsland Rex Jump kom je op de juiste sessie, het juiste tabblad en de juiste pane terecht, ook als je er tientallen open hebt.
+Without this, Vibe Island only brings Rex to the front. With RexJump for VibeIsland you land on the right session, the right tab and the right pane, even with dozens open.
 
-## Wat het kan
+## What it does
 
-- Springt bij een klik naar de exacte pane in Rex waar de agent draait en haalt Rex Beta naar voren.
-- Werkt voor elke sessie die Vibe Island toont, zolang die in Rex draait.
-- Is snel: een sprong duurt ongeveer 0,1 seconde.
-- Doet niets als er geen pane bij de sessie hoort. Er wordt nooit een nieuwe of verkeerde pane geopend.
-- Draait onzichtbaar op de achtergrond, zonder dockicoon, en nooit dubbel.
+- Jumps to the exact pane in Rex where the agent runs on a click, and brings Rex Beta to the front.
+- Works for every session Vibe Island shows, as long as it runs in Rex.
+- Is fast: a jump takes about 0.1 seconds.
+- Does nothing when no pane belongs to the session. It never opens a new or wrong pane.
+- Runs invisibly in the background, without a Dock icon, and never twice.
 
-## Installeren
+## Installing
 
-Je hebt Vibe Island 1.0.22 of nieuwer nodig (niet de Mac App Store-editie), Rex Beta en Xcode of de command line tools.
+You need Vibe Island 1.0.22 or newer (not the Mac App Store edition), Rex Beta and Xcode or the command line tools.
 
 ```
 ./install.sh
 ```
 
-Dat bouwt het appje als dat nog niet bestaat, zet het in `~/Applications/VibeIsland Rex Jump.app`, plaatst de jump rule in `~/.vibe-island/integrations/rex.json` en start het appje. Is de rule veranderd, herstart dan Vibe Island, want die leest zijn integraties alleen bij het opstarten. Het appje start vanzelf bij de eerste klik. De allereerste klik na een herstart van je Mac duurt ongeveer een halve seconde; daarna is het direct.
+This builds the app if it does not exist yet, puts it in `~/Applications/RexJump for VibeIsland.app`, places the jump rule in `~/.vibe-island/integrations/rex.json` and starts the app. If the rule changed, restart Vibe Island, because it only reads its integrations at startup. The app starts by itself on the first click. The very first click after a restart of your Mac takes about half a second; after that it is instant.
 
-Staat het appje in `~/Applications`, dan vindt macOS het ook via Spotlight. Na een wijziging in de code draai je `./build.sh` en daarna `./install.sh`: de draaiende versie wordt gestopt en vervangen.
+When the app is in `~/Applications`, macOS also finds it through Spotlight. After a change in the code, run `./build.sh` and then `./install.sh`: the running version is stopped and replaced.
 
-## Gebruiken
+## Using it
 
-Niets: klik in Vibe Island op een sessie die in Rex draait.
+Nothing: click a session in Vibe Island that runs in Rex.
 
-Handmatig proberen kan met de tty van een sessie:
+To try it by hand, use the tty of a session:
 
 ```
 open "rexjump://focus?pid=&tty=%2Fdev%2Fttys001"
 ```
 
-## Als het niet werkt
+## When it does not work
 
-Elke sprong staat in `~/Library/Logs/rex-vibe-island-jump.log`:
+Every jump is in `~/Library/Logs/rexjump-for-vibeisland.log`:
 
-| In het log | Betekenis |
+| In the log | Meaning |
 |---|---|
-| geen `url`-regel na een klik | Vibe Island gebruikt de rule niet. Controleer of `rex.json` op zijn plek staat en herstart Vibe Island. |
-| `klaar` | De sprong is gelukt. |
-| `niet gevonden in Rex` | Die sessie draait niet in een Rex-pane. Er is niets gedaan. |
-| `geen pid of tty` | Vibe Island gaf geen gegevens mee. Er is niets gedaan. |
-| `mislukt: …` | Er ging iets mis met Rex, bijvoorbeeld een server die niet draait. De melding staat erbij. |
+| no `url` line after a click | Vibe Island does not use the rule. Check that `rex.json` is in place and restart Vibe Island. |
+| `done` | The jump succeeded. |
+| `not found in Rex` | That session does not run in a Rex pane. Nothing was done. |
+| `no pid or tty` | Vibe Island passed no data. Nothing was done. |
+| `failed: …` | Something went wrong with Rex, for example a server that is not running. The message is included. |
 
-## Verwijderen
+## Uninstalling
 
 ```
-pkill -f "VibeIsland Rex Jump.app"
+pkill -f "RexJump for VibeIsland.app"
 rm ~/.vibe-island/integrations/rex.json
+rm -rf "$HOME/Applications/RexJump for VibeIsland.app"
 ```
 
-Herstart daarna Vibe Island.
+Then restart Vibe Island.
 
-## Het icoon
+## The icon
 
-Het icoon combineert dat van Vibe Island (de notch) met dat van Claude (de oranje badge). Het is samengesteld uit de iconen van de apps op deze Mac en zit als `icon/icon.png` in de repo. `Resources/VibeIsland Rex Jump.icns` is daar de appversie van, en `icon/social-preview.png` is het plaatje voor de repo op GitHub.
+The icon is an original design: a grid of panes with an arrow jumping to one of them. `icon/icon.svg` is the source, `icon/icon.png` the rendered version, `Resources/RexJump for VibeIsland.icns` the app version and `icon/social-preview.png` the image for the repository on GitHub.
 
-## Beperkingen
+## Limitations
 
-- Alleen Rex Beta op macOS, met Vibe Island op dezelfde Mac.
-- Rex Beta draait onder de bundle id `com.superlogical.rex`. Staat er ooit een andere build, dan moet dat in `Sources/RexApp.swift` aangepast worden.
-- Het appje gaat uit van versie 10 van de Rex-API. Een veel nieuwere Rex kan aanpassing vragen.
-- Een ingebouwde `rex://focus` in Rex zou dit overbodig maken. Zie `FEATURE-REQUEST.md`.
+- Only Rex Beta on macOS, with Vibe Island on the same Mac.
+- Rex Beta runs under the bundle id `com.superlogical.rex`. If another build ever appears, change it in `Sources/RexApp.swift`.
+- The app assumes version 10 of the Rex API. A much newer Rex may need changes.
+- A built-in `rex://focus` in Rex would make this unnecessary. See `FEATURE-REQUEST.md`.
+
+## Disclaimer
+
+RexJump for VibeIsland is an independent project. It is not affiliated with, endorsed by or sponsored by Vibe Island or Superlogical (Rex). Vibe Island and Rex are the names of their respective owners and are used here only to say what this app works with.
+
+## License
+
+[MIT](LICENSE)
